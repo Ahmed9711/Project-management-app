@@ -1,0 +1,41 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @project %>
+
+<div>
+  <%= link_to "Edit this project", edit_project_path(@project) %> |
+  <%= link_to "Back to projects", projects_path %>
+
+  <%= button_to "Destroy this project", @project, method: :delete %>
+</div>
+
+<hr>
+<h1>New task</h1>
+
+<%= render "tasks/form", task: @task %>
+
+<hr>
+
+<h1>Tasks</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Status</th>
+  </tr>
+  <% @project.tasks.each do |task| %>
+    <% if task.persisted? %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.description %></td>
+        <td><%= task.status %></td>
+        <td><%= link_to "Show", [@project, task] %></td>
+        <td><%= link_to "Edit", edit_project_task_path(@project, task) %></td>
+        <td><%= button_to "Destroy", [@project, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end  %>
+  <% end %>
+</table>   
+
+
+<%= link_to "New task", new_project_task_path(@project) %>
