@@ -12,8 +12,14 @@
 
   <body>
     <%= render 'layouts/navigation' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container pt-5">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <div class="card">
+        <div class="card-body">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
