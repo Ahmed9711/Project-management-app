@@ -1,20 +1,39 @@
-<p style="color: green"><%= notice %></p>
+<%= link_to "Back", projects_path, class: "btn btn-light mb-3" %>
+<div class="card">
+    <div class="card-body">
+      <h2 class="card-title d-flex justify-content-between">
+        <span><%= @project.name %></span>
+        <div>
+          <%= link_to "Edit", edit_project_path(@project), class: "btn btn-warning" %>
+          <%= button_to "Delete", @project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </div>
+      </h2>
 
-<%= render @project %>
+      <h6>Add task</h6>
+      <%= form_with(model: [@task.project, @task], html: {class: "row row-cols-lg-auto g-3 align-items-center"}) do |form| %>
+        <% if @task.errors.any? %>
+          <div style="color: red">
+            <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-<div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
+            <ul>
+              <% @task.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  <%= button_to "Destroy this project", @project, method: :delete %>
+        <div class = "input-group">
+          <%= form.text_field :name, class: "form-control", placeholder: "Enter Task name" %>
+          <div class = "input-group-append">
+            <%= form.submit class: "btn btn-primary"%>
+          <div>
+        </div>
+
+      <% end %>
+
+    </div>
 </div>
-
-<hr>
-<h1>New task</h1>
-
-<%= render "tasks/form", task: @task %>
-
-<hr>
 
 <h1>Tasks</h1>
 <table>
