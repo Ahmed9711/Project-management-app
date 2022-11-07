@@ -9,50 +9,52 @@
         </div>
       </h2>
 
-      <h6>Add task</h6>
-      <%= form_with(model: [@task.project, @task], html: {class: "row row-cols-lg-auto g-3 align-items-center"}) do |form| %>
-        <% if @task.errors.any? %>
-          <div style="color: red">
-            <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <div class="mb-4">
+        <h6>Add task</h6>
+        <%= form_with(model: [@task.project, @task]) do |form| %>
+          <% if @task.errors.any? %>
+            <div style="color: red">
+              <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-            <ul>
-              <% @task.errors.each do |error| %>
-                <li><%= error.full_message %></li>
-              <% end %>
-            </ul>
+              <ul>
+                <% @task.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%= form.hidden_field :status, value: 'not-started'%>
+
+          <div class = "input-group ">
+            <%= form.text_field :name, class: "form-control", placeholder: "Enter Task name" %>
+            <%= form.submit class: "btn btn-primary"%>
+          </div>
+
+        <% end %>
+      </div>
+      
+      <h4>Tasks</h4>
+      <% @project.tasks.each do |task| %>
+        <% if task.persisted? %>
+          <div class = "card mb-3">
+            <div class = "card-body">
+              <div class = "d-flex justify-content-between">
+                <span class="badge text-bg-primary"><%= task.status %></span>
+                <div style="display: inline;">
+                  <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn btn-light btn-sm mb-1" %>
+                  <%= button_to "Delete", [@project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm"  %>
+                </div>
+              </div>
+              <h5 class="card-title">
+                <span><%= task.name %></span>
+              </h5>
+              <p><%= task.description %></p>
+            </div>
           </div>
         <% end %>
-
-        <div class = "input-group">
-          <%= form.text_field :name, class: "form-control", placeholder: "Enter Task name" %>
-          <div class = "input-group-append">
-            <%= form.submit class: "btn btn-primary"%>
-          <div>
-        </div>
-
-      <% end %>
+      <% end %>  
 
     </div>
 </div>
-
-<h1>Tasks</h1>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Status</th>
-  </tr>
-  <% @project.tasks.each do |task| %>
-    <% if task.persisted? %>
-      <tr>
-        <td><%= task.name %></td>
-        <td><%= task.description %></td>
-        <td><%= task.status %></td>
-        <td><%= link_to "Show", [@project, task] %></td>
-        <td><%= link_to "Edit", edit_project_task_path(@project, task) %></td>
-        <td><%= button_to "Destroy", [@project, task], method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end  %>
-  <% end %>
-</table>   
 
