@@ -1,11 +1,11 @@
-<%= link_to "Back", projects_path, class: "btn btn-light mb-3" %>
+<%= link_to "Back", projects_path, class: "btn btn-secondary mb-3" %>
 <div class="card">
     <div class="card-body">
       <h2 class="card-title d-flex justify-content-between">
         <span><%= @project.name %></span>
         <div>
-          <%= link_to "Edit", edit_project_path(@project), class: "btn btn-warning" %>
-          <%= button_to "Delete", @project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+          <%= link_to "Edit", edit_project_path(@project), class: "btn btn-light" %>
+          <%= button_to "Delete", @project, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-dark" %>
         </div>
       </h2>
 
@@ -39,15 +39,13 @@
         <% if task.persisted? %>
           <div class = "card mb-3">
             <div class = "card-body">
-              <div class = "d-flex justify-content-between">
-                <span class="badge text-bg-primary"><%= task.status %></span>
-                <div style="display: inline;">
-                  <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn btn-light btn-sm mb-1" %>
-                  <%= button_to "Delete", [@project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-secondary btn-sm"  %>
-                </div>
-              </div>
-              <h5 class="card-title">
+              <span class="badge text-bg-<%= task.badge_color%>"><%= task.status %></span>
+              <h5 class="card-title d-flex justify-content-between">
                 <span><%= task.name %></span>
+                 <div>
+                  <%= link_to "Edit", edit_project_task_path(@project, task), class: "btn btn-light btn-sm mb-1" %>
+                  <%= button_to "Delete", [@project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-dark btn-sm"  %>
+                </div>
               </h5>
               <p><%= task.description %></p>
             </div>
